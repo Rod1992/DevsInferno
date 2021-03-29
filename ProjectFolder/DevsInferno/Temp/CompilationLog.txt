@@ -1,24 +1,44 @@
 # Starting compiling UnityEngine.TestRunner.dll
-/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-9b5c4f8d23bd54ea49b0044e8b5cdfe0
+/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-413d4f346f9634025bd5727e6730dcf7
 # Starting compiling UnityEngine.UI.dll
-/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-f5c9df195f04542218b52f43fd4bce03
+/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-647d166d300094e78ab5614b7c54940f
 # Starting compiling UnityEditor.TestRunner.dll
-/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-1a7531f0c364b4961a34610cb200d7ac
+/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-b64dea23d4a664151983b6e2ee121c13
 # Starting compiling UnityEditor.UI.dll
-/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-25df8d56db92c452fa0850b4c10c7a7c
+/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-dd9e7986a7f2d4e318e62bb7a2c0cd00
 # Starting compiling Unity.VSCode.Editor.dll
-/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-4fa5315b81dd649c584d23641d8b69ba
+/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-312bbf98180674b339d5f64c28e79996
 # Starting compiling Unity.VisualStudio.Editor.dll
-/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-860d388fa482d4ce5aabc9e6f3f924a5
+/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-dd864d81833d1478ba3f8d792b2eda34
 # Starting compiling Unity.Timeline.dll
-/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-037860335237840c183f6c962f384d5d
+/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-bb7724eedccc64e78b2df6c4e1abae9d
 # Starting compiling Unity.TextMeshPro.dll
-/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-610f132603b4f4b2fb8a2666fa754c5d
+/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-0681dbc0586514b9bba0f547f4b16566
 # Starting compiling Unity.CollabProxy.Editor.dll
-/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-fcc60dd946d494654bdf8149382e7270
+/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-524e79a69e45445099bd166dc4b5b367
 # Starting compiling Unity.Rider.Editor.dll
-/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-b608fcaf6f2d24a02aded69654663748
+/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-a58cd08fe195540dcb02ef5a07456f17
+# Starting compiling UniRx.dll
+/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-36a5850836f4e495cb67299b4244add6
+# Starting compiling Zenject.dll
+/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-add38d3ad850d4949bac9f1adc4b9e77
 # Starting compiling Unity.Timeline.Editor.dll
-/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-b0fb77790a0a94b6fb475ff39fe46f30
+/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-f0d4534b8d5fc4b72ac6a832cd230058
 # Starting compiling Unity.TextMeshPro.Editor.dll
-/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-4da21c280395f48b199cf111cd5e32cd
+/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-e8b7e992873604887abfb8b916555344
+# Starting compiling Zenject-Editor.dll
+/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-59a2a079492ea47ddbf3466d07c305f5
+# Starting compiling Zenject-TestFramework.dll
+/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-3dd106774453c461c98e866ad787e0ce
+# Starting compiling UniRx.Examples.dll
+/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-e5a191c342fd841efbc73e14d505a0c0
+# Starting compiling Zenject-IntegrationTests.dll
+/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-53b9c654993974185abefc964944f999
+# Starting compiling Zenject-UnitTests-Editor.dll
+/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-987c78f4726a24fccbd23239e36720b1
+# Starting compiling Zenject-PoolMonitor-Editor.dll
+/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-8b5551c8fae784afe9b72c1ddb1cd77c
+# Starting compiling Zenject-ReflectionBaking-Editor.dll
+/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-9220c0840d4e34578aeb351197249a3a
+# Starting compiling Zenject-IntegrationTests-Editor.dll
+/Applications/Unity/Hub/Editor/2020.2.0b1/Unity.app/Contents/Tools/RoslynScripts/unity_csc.sh /noconfig @Temp/UnityTempFile-ce0cca2d54021473ea3d13242a81b41a
