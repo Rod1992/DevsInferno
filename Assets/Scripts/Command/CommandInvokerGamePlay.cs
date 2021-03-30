@@ -7,37 +7,37 @@ using System.Linq;
 using UniRx;
 using System.Threading.Tasks;
 
-public class CommandInvokerGamePlay : CommandInvoker
+public class CommandInvokerGamePlay : ICommandInvoker
 {
     /// <summary>
     /// commands to execute
     /// </summary>
-    List<Command> commandsToInvoke;
+    List<ICommand> commandsToInvoke;
     /// <summary>
     /// commands that we can undo
     /// </summary>
-    List<Command> commandsInvoked;
+    List<ICommand> commandsInvoked;
     /// <summary>
     /// commands that will go to the logs
     /// </summary>
-    List<Command> history;
+    List<ICommand> history;
 
     [Inject]
     public void Constructor()
     {
-        commandsToInvoke = new List<Command>();
-        commandsInvoked = new List<Command>();
-        history = new List<Command>();
+        commandsToInvoke = new List<ICommand>();
+        commandsInvoked = new List<ICommand>();
+        history = new List<ICommand>();
     }
 
-    public void Add(Command command)
+    public void Add(ICommand command)
     {
         commandsToInvoke.Add(command);
     }
 
     public void ExecuteCommands()
     {
-        foreach (Command command in commandsToInvoke)
+        foreach (ICommand command in commandsToInvoke)
         {
             if (command.CanExecute())
             {
@@ -64,7 +64,7 @@ public class CommandInvokerGamePlay : CommandInvoker
     public async void UndoUntilTimestamp(int tsToUndo, int tsStart)
     {
         //NoAlloc
-        Command command;
+        ICommand command;
         int currentTs;
         int oldTs = tsStart;
 
@@ -124,6 +124,6 @@ public class CommandInvokerGamePlay : CommandInvoker
     public string ExportLogReportCommands()
     {
         //we aggreagate the names of all the commands
-        return history.Select<Command, string>((command, s) => { return command.GetName(); }).Aggregate((x, y) => { return x + y; });
+        return history.Select<ICommand, string>((command, s) => { return command.GetName(); }).Aggregate((x, y) => { return x + y; });
     }
 }

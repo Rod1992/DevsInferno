@@ -7,7 +7,7 @@ using UniRx;
 public class Game : MonoBehaviour
 {
     static Game instance;
-    public CommandInvoker commandInvoker;
+    public ICommandInvoker commandInvoker;
     public MoveController moveController;
     public InputManager inputManager;
 
@@ -20,7 +20,7 @@ public class Game : MonoBehaviour
     }
 
     [Inject]
-    public void Constructor(CommandInvoker invoker, MoveController _moveController, InputManager _inputManager)
+    public void Constructor(ICommandInvoker invoker, MoveController _moveController, InputManager _inputManager)
     {
         instance = this;
         commandInvoker = invoker;

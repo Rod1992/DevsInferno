@@ -37,7 +37,7 @@ public enum MoveType : short
     Right = 16,
 }
 
-public class MoveCommand : Command
+public class MoveCommand : ICommand
 {
     MoveType direction;
 

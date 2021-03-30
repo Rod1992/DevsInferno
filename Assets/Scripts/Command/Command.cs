@@ -1,4 +1,4 @@
-public interface Command
+public interface ICommand
 {
     /// <summary>
     /// 
@@ -39,7 +39,7 @@ public interface Command
     bool CanUndo(int ts);
 }
 
-public interface CommandInvoker
+public interface ICommandInvoker
 {
     /// <summary>
     /// Initiaize the Invoker
@@ -67,5 +67,5 @@ public interface CommandInvoker
     /// Add a Command to the queue
     /// </summary>
     /// <param name="command"></param>
-    void Add(Command command);
+    void Add(ICommand command);
 }

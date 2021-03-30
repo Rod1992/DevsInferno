@@ -4,7 +4,7 @@ using UnityEngine;
 using UniRx;
 using Zenject;
 
-public class CommandInvokeDebugging : CommandInvoker
+public class CommandInvokeDebugging : ICommandInvoker
 {
     [Inject]
     public void Constructor()
@@ -27,7 +27,7 @@ public class CommandInvokeDebugging : CommandInvoker
         throw new System.NotImplementedException();
     }
 
-    public void Add(Command command)
+    public void Add(ICommand command)
     {
 
     }

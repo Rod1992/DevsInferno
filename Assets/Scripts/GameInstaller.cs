@@ -8,7 +8,7 @@ public class GameInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-        Container.Bind<CommandInvoker>().To<CommandInvokerGamePlay>().AsSingle().NonLazy();
+        Container.Bind<ICommandInvoker>().To<CommandInvokerGamePlay>().AsSingle().NonLazy();
         Container.Bind<MoveController>().AsSingle().NonLazy();
         Container.Bind<InputManager>().AsSingle().NonLazy();
     }
