@@ -31,4 +31,9 @@ public class CommandInvokeDebugging : ICommandInvoker
     {
 
     }
+
+    public bool IsUndoing()
+    {
+        throw new System.NotImplementedException();
+    }
 }

@@ -14,6 +14,6 @@ public class InputManager
         Observable.EveryFixedUpdate().Where(x => Input.GetKey(KeyCode.LeftArrow)).Subscribe(x => new MoveCommand(MoveType.Left));
         Observable.EveryFixedUpdate().Where(x => Input.GetKey(KeyCode.RightArrow)).Subscribe(x => new MoveCommand(MoveType.Right));
 
-        Observable.EveryUpdate().Where(x => Input.GetKeyDown(KeyCode.R)).Subscribe(x => Game.Instance.commandInvoker.UndoUntilTimestamp(0, Time.time));
+        Observable.EveryUpdate().Where(x => Input.GetKeyDown(KeyCode.R)).Subscribe(x => Game.Instance.UndoAll());
     }
 }

@@ -68,4 +68,10 @@ public interface ICommandInvoker
     /// </summary>
     /// <param name="command"></param>
     void Add(ICommand command);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns> if are we right now undoing commands</returns>
+    bool IsUndoing();
 }

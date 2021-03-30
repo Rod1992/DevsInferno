@@ -30,7 +30,7 @@ public class MoveController
     public void Rotate(bool isLeft)
     {
         Quaternion currentRotation = character.transform.rotation;
-        Vector3 euler = currentRotation.eulerAngles + new Vector3(0, 10 * Time.fixedDeltaTime * (isLeft ? -1 : 1), 0);
+        Vector3 euler = currentRotation.eulerAngles + new Vector3(0, 20 * Time.fixedDeltaTime * (isLeft ? -1 : 1), 0);
         rigidbody.MoveRotation(Quaternion.Euler(euler));
     }
 }
@@ -59,7 +59,7 @@ public class RotateCommand : ICommand
         isLeft = _isLeft;
         ts = Time.time;
 
-        Game.Instance.commandInvoker.Add(this);
+        Game.Instance.AddCommand(this);
     }
 
     public bool CanExecute()
@@ -117,7 +117,7 @@ public class MoveCommand : ICommand
         direction = moveType;
         ts = Time.time;
 
-        Game.Instance.commandInvoker.Add(this);
+        Game.Instance.AddCommand(this);
     }
 
     public bool CanExecute()

@@ -2098,6 +2098,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5299645823720771534}
   - component: {fileID: 1214968665}
+  - component: {fileID: 193365430251981197}
+  - component: {fileID: 726437279752278731}
   m_Layer: 0
   m_Name: Male_01_V01
   m_TagString: Untagged
@@ -2150,6 +2152,36 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!54 &193365430251981197
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4812042741799327092}
+  serializedVersion: 2
+  m_Mass: 80
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!136 &726437279752278731
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4812042741799327092}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.42478108
+  m_Height: 1.8664896
+  m_Direction: 1
+  m_Center: {x: -0.0044246316, y: 0.9199555, z: 0}
 --- !u!1 &4921119986479013336
 GameObject:
   m_ObjectHideFlags: 0

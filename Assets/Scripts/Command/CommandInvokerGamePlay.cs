@@ -21,6 +21,10 @@ public class CommandInvokerGamePlay : ICommandInvoker
     /// commands that will go to the logs
     /// </summary>
     List<ICommand> history;
+    /// <summary>
+    /// are we undoing commands
+    /// </summary>
+    bool isUndoing;
 
     [Inject]
     public void Constructor()
@@ -28,6 +32,7 @@ public class CommandInvokerGamePlay : ICommandInvoker
         commandsToInvoke = new List<ICommand>();
         commandsInvoked = new List<ICommand>();
         history = new List<ICommand>();
+        isUndoing = false;
     }
 
     public void Add(ICommand command)
@@ -67,10 +72,12 @@ public class CommandInvokerGamePlay : ICommandInvoker
         ICommand command;
         float currentTs;
         float oldTs = tsStart;
+        isUndoing = true;
 
-        if(commandsInvoked.Count <= 0)
+        if (commandsInvoked.Count <= 0)
         {
             //nothing to do
+            isUndoing = false;
             return;
         }
 
@@ -120,11 +127,17 @@ public class CommandInvokerGamePlay : ICommandInvoker
         }
 
         commandsInvoked.RemoveAll((x) => x.GetTimeStamp() >= tsToUndo);
+        isUndoing = false;
     }
 
     public string ExportLogReportCommands()
     {
         //we aggreagate the names of all the commands
         return history.Select<ICommand, string>((command, s) => { return command.GetName(); }).Aggregate((x, y) => { return x + y; });
+    }
+
+    public bool IsUndoing()
+    {
+        return isUndoing;
     }
 }
