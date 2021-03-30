@@ -8,24 +8,34 @@ using System;
 public class MoveController
 {
     GameObject character;
+    Rigidbody rigidbody;
 
     [Inject]
     public void Constructor()
     {
         character = GameObject.Instantiate(Resources.Load<GameObject>("Male_01_V01"), Vector3.zero, Quaternion.Euler(0,0,0));
+        rigidbody = character.GetComponent<Rigidbody>();
     }
 
     public void MoveLeftOrRight( bool isLeft)
     {
-        character.transform.position += character.transform.right * Time.deltaTime * (isLeft ? -1 : 1);
+        rigidbody.MovePosition(character.transform.position + (character.transform.right * Time.fixedDeltaTime * (isLeft ? -1 : 1)));
     }
 
     public void MoveForwardOrBackwards(bool isBackWards)
     {
-        character.transform.position += character.transform.forward * Time.deltaTime * (isBackWards ? -1 : 1);
+        rigidbody.MovePosition(character.transform.position + (character.transform.forward * Time.fixedDeltaTime * (isBackWards ? -1 : 1)));
+    }
+
+    public void Rotate(bool isLeft)
+    {
+        Quaternion currentRotation = character.transform.rotation;
+        Vector3 euler = currentRotation.eulerAngles + new Vector3(0, 10 * Time.fixedDeltaTime * (isLeft ? -1 : 1), 0);
+        rigidbody.MoveRotation(Quaternion.Euler(euler));
     }
 }
 
+//maybe useless to put as a flag
 [Flags]
 public enum MoveType : short
 {
@@ -35,6 +45,66 @@ public enum MoveType : short
     Backward = 4,
     Left = 8,
     Right = 16,
+}
+
+#region Commands
+public class RotateCommand : ICommand
+{
+    float ts;
+
+    bool isLeft;
+
+    public RotateCommand(bool _isLeft)
+    {
+        isLeft = _isLeft;
+        ts = Time.time;
+
+        Game.Instance.commandInvoker.Add(this);
+    }
+
+    public bool CanExecute()
+    {
+        return Game.Instance.moveController != null;
+    }
+
+    public bool CanUndo()
+    {
+        return CanExecute();
+    }
+
+    public bool CanUndo(float ts)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Execute()
+    {
+        MoveController moveController = Game.Instance.moveController;
+
+        moveController.Rotate(isLeft);
+    }
+
+    public string GetName()
+    {
+        return "Rotate " + (isLeft ? "Left" : "Right");
+    }
+
+    public float GetTimeStamp()
+    {
+        return ts;
+    }
+
+    public void Undo()
+    {
+        MoveController moveController = Game.Instance.moveController;
+
+        moveController.Rotate(!isLeft);
+    }
+
+    public void Undo(float ts)
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public class MoveCommand : ICommand
@@ -113,3 +183,4 @@ public class MoveCommand : ICommand
             moveController.MoveLeftOrRight(isInverted);
     }
 }
+#endregion
