@@ -40,10 +40,12 @@ public enum MoveType : short
 public class MoveCommand : ICommand
 {
     MoveType direction;
+    float ts;
 
     public MoveCommand(MoveType moveType)
     {
         direction = moveType;
+        ts = Time.time;
 
         Game.Instance.commandInvoker.Add(this);
     }
@@ -58,28 +60,17 @@ public class MoveCommand : ICommand
 
     public bool CanUndo()
     {
-        throw new System.NotImplementedException();
+        return CanExecute();
     }
 
-    public bool CanUndo(int ts)
+    public bool CanUndo(float ts)
     {
         throw new System.NotImplementedException();
     }
 
     public void Execute()
     {
-        MoveController moveController = Game.Instance.moveController;
-        if (direction.HasFlag(MoveType.Forward))
-            moveController.MoveForwardOrBackwards(false);
-
-        if (direction.HasFlag(MoveType.Backward))
-            moveController.MoveForwardOrBackwards(true);
-
-        if (direction.HasFlag(MoveType.Left))
-            moveController.MoveLeftOrRight(true);
-
-        if (direction.HasFlag(MoveType.Right))
-            moveController.MoveLeftOrRight(false);
+        ApplyMovement(false);
     }
 
     public string GetName()
@@ -87,18 +78,38 @@ public class MoveCommand : ICommand
         return "Move" + direction.ToString();
     }
 
-    public int GetTimeStamp()
+    public float GetTimeStamp()
     {
-        throw new System.NotImplementedException();
+        return ts;
     }
 
     public void Undo()
     {
+        ApplyMovement(true);
+    }
+
+    public void Undo(float ts)
+    {
         throw new System.NotImplementedException();
     }
 
-    public void Undo(int ts)
+    /// <summary>
+    /// Apply a movement given a direcction
+    /// </summary>
+    /// <param name="isInverted">means if we are reversing the movement</param>
+    public void ApplyMovement(bool isInverted)
     {
-        throw new System.NotImplementedException();
+        MoveController moveController = Game.Instance.moveController;
+        if (direction.HasFlag(MoveType.Forward))
+            moveController.MoveForwardOrBackwards(isInverted);
+
+        if (direction.HasFlag(MoveType.Backward))
+            moveController.MoveForwardOrBackwards(!isInverted);
+
+        if (direction.HasFlag(MoveType.Left))
+            moveController.MoveLeftOrRight(!isInverted);
+
+        if (direction.HasFlag(MoveType.Right))
+            moveController.MoveLeftOrRight(isInverted);
     }
 }

@@ -61,12 +61,12 @@ public class CommandInvokerGamePlay : ICommandInvoker
         commandsToInvoke.Clear();
     }
 
-    public async void UndoUntilTimestamp(int tsToUndo, int tsStart)
+    public async void UndoUntilTimestamp(float tsToUndo, float tsStart)
     {
         //NoAlloc
         ICommand command;
-        int currentTs;
-        int oldTs = tsStart;
+        float currentTs;
+        float oldTs = tsStart;
 
         if(commandsInvoked.Count <= 0)
         {
@@ -83,8 +83,9 @@ public class CommandInvokerGamePlay : ICommandInvoker
             currentTs = command.GetTimeStamp();
 
             if (currentTs != oldTs) {
+                
                 //we wait
-                await Task.Delay(oldTs - currentTs);
+                await Task.Delay((int)((oldTs - currentTs ) * 1000));
                 oldTs = currentTs;
             }
 

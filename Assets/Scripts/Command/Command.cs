@@ -4,7 +4,7 @@ public interface ICommand
     /// 
     /// </summary>
     /// <returns> the timestamp this command was executed</returns>
-    int GetTimeStamp();
+    float GetTimeStamp();
 
     /// <summary>
     /// Get the name of the command, ideally it would have the type and a guid
@@ -28,7 +28,7 @@ public interface ICommand
     /// </summary>
     void Undo();
 
-    void Undo(int ts);
+    void Undo(float ts);
 
     /// <summary>
     /// Can we undo the command?, first it should have been executed
@@ -36,7 +36,7 @@ public interface ICommand
     /// <returns></returns>
     bool CanUndo();
 
-    bool CanUndo(int ts);
+    bool CanUndo(float ts);
 }
 
 public interface ICommandInvoker
@@ -55,7 +55,7 @@ public interface ICommandInvoker
     /// Undo the commands until a certain timestamp 
     /// </summary>
     /// <param name="ts">timestamp</param>
-    void UndoUntilTimestamp(int ts, int tsStart);
+    void UndoUntilTimestamp(float ts, float tsStart);
 
     /// <summary>
     /// 

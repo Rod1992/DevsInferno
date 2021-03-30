@@ -22,7 +22,7 @@ public class CommandInvokeDebugging : ICommandInvoker
         throw new System.NotImplementedException();
     }
 
-    public void UndoUntilTimestamp(int ts, int tsStart)
+    public void UndoUntilTimestamp(float ts, float tsStart)
     {
         throw new System.NotImplementedException();
     }
