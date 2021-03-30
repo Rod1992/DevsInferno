@@ -42,6 +42,11 @@ public interface Command
 public interface CommandInvoker
 {
     /// <summary>
+    /// Initiaize the Invoker
+    /// </summary>
+    void Constructor();
+
+    /// <summary>
     /// Execute all the commands
     /// </summary>
     void ExecuteCommands();

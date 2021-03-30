@@ -63,19 +63,25 @@ public class CommandInvokerGamePlay : CommandInvoker
         int currentTs;
         int oldTs = tsStart;
 
-        //we order the commands using the ts
-        commandsInvoked.Sort((x, y) => x.GetTimeStamp().CompareTo(y.GetTimeStamp()));
-
         if(commandsInvoked.Count <= 0)
         {
             //nothing to do
             return;
         }
 
+        //we order the commands using the ts
+        commandsInvoked.Sort((x, y) => x.GetTimeStamp().CompareTo(y.GetTimeStamp()));
+
         for (int i = commandsInvoked.Count - 1; i >= 0; i--)
         {
             command = commandsInvoked[i];
             currentTs = command.GetTimeStamp();
+
+            if (currentTs != oldTs) {
+                //we wait
+                await Task.Delay(oldTs - currentTs);
+                oldTs = currentTs;
+            }
 
             if (currentTs >= tsToUndo && command.CanUndo())
             {
@@ -104,10 +110,6 @@ public class CommandInvokerGamePlay : CommandInvoker
             {
                 Debug.LogError("Couldn't undo the command" + command.GetName());
             }
-
-
-            //we wait , not correct, to finish
-            await Task.Delay(oldTs - currentTs);
 
         }
 
