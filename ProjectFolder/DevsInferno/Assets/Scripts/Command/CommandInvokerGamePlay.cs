@@ -30,6 +30,11 @@ public class CommandInvokerGamePlay : CommandInvoker
         history = new List<Command>();
     }
 
+    public void Add(Command command)
+    {
+        commandsToInvoke.Add(command);
+    }
+
     public void ExecuteCommands()
     {
         foreach (Command command in commandsToInvoke)

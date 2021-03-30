@@ -9,7 +9,7 @@ public class CommandInvokeDebugging : CommandInvoker
     [Inject]
     public void Constructor()
     {
-
+        
     }
 
     public void ExecuteCommands()
@@ -25,5 +25,10 @@ public class CommandInvokeDebugging : CommandInvoker
     public void UndoUntilTimestamp(int ts, int tsStart)
     {
         throw new System.NotImplementedException();
+    }
+
+    public void Add(Command command)
+    {
+
     }
 }

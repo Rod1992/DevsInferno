@@ -62,4 +62,10 @@ public interface CommandInvoker
     /// </summary>
     /// <returns>A log with all the executed commands up to this moment</returns>
     string ExportLogReportCommands();
+
+    /// <summary>
+    /// Add a Command to the queue
+    /// </summary>
+    /// <param name="command"></param>
+    void Add(Command command);
 }
