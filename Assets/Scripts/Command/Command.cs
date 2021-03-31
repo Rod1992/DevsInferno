@@ -1,6 +1,18 @@
 public interface ICommand
 {
     /// <summary>
+    /// to be used whe we have multiple command invokers
+    /// </summary>
+    /// <returns> in which position was this command executed</returns>
+    int GetIndexOrder();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="index">order in which this command was ordered</param>
+    void SetIndexOrder(int index);
+
+    /// <summary>
     /// 
     /// </summary>
     /// <returns> the timestamp this command was executed</returns>

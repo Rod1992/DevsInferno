@@ -25,6 +25,7 @@ public class CommandInvokerGamePlay : ICommandInvoker
     /// are we undoing commands
     /// </summary>
     bool isUndoing;
+    int indexCommand = 0; 
 
     [Inject]
     public void Constructor()
@@ -54,6 +55,7 @@ public class CommandInvokerGamePlay : ICommandInvoker
                 {
                     Debug.LogError("There was a problem with the command " + command.GetName() + " The error was "+ e.Message);
                 }
+                command.SetIndexOrder(indexCommand++);
                 commandsInvoked.Add(command);
                 history.Add(command);
             }
@@ -80,15 +82,16 @@ public class CommandInvokerGamePlay : ICommandInvoker
             isUndoing = false;
             return;
         }
+        EventBus.TriggerEvent(EventMessage.StartRollBackTime, null);
 
         //we order the commands using the ts
-        commandsInvoked.Sort((x, y) => x.GetTimeStamp().CompareTo(y.GetTimeStamp()));
+        commandsInvoked.Sort((x, y) => x.GetIndexOrder().CompareTo(y.GetIndexOrder()));
 
         for (int i = commandsInvoked.Count - 1; i >= 0; i--)
         {
             command = commandsInvoked[i];
             currentTs = command.GetTimeStamp();
-
+            
             if (currentTs != oldTs) {
                 
                 //we wait
@@ -128,6 +131,7 @@ public class CommandInvokerGamePlay : ICommandInvoker
 
         commandsInvoked.RemoveAll((x) => x.GetTimeStamp() >= tsToUndo);
         isUndoing = false;
+        EventBus.TriggerEvent(EventMessage.EndRollBackTime, null);
     }
 
     public string ExportLogReportCommands()

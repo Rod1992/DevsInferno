@@ -70,6 +70,7 @@ public enum MoveType : short
 public class RotateCommand : ICommand
 {
     float ts;
+    int index = -1;
 
     bool isLeft;
 
@@ -101,6 +102,11 @@ public class RotateCommand : ICommand
         moveController.Rotate(isLeft);
     }
 
+    public int GetIndexOrder()
+    {
+        return index;
+    }
+
     public string GetName()
     {
         return "Rotate " + (isLeft ? "Left" : "Right");
@@ -109,6 +115,11 @@ public class RotateCommand : ICommand
     public float GetTimeStamp()
     {
         return ts;
+    }
+
+    public void SetIndexOrder(int _index)
+    {
+        index = _index;
     }
 
     public void Undo()
@@ -128,6 +139,7 @@ public class MoveCommand : ICommand
 {
     MoveType direction;
     float ts;
+    int index = -1;
 
     public MoveCommand(MoveType moveType)
     {
@@ -197,6 +209,16 @@ public class MoveCommand : ICommand
 
         if (direction.HasFlag(MoveType.Right))
             moveController.MoveLeftOrRight(isInverted);
+    }
+
+    public int GetIndexOrder()
+    {
+        return index;
+    }
+
+    public void SetIndexOrder(int _index)
+    {
+        index = _index;
     }
 }
 #endregion
