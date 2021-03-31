@@ -1,8 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Zenject;
+
+#region Messages
+public enum EventMessage
+{
+    None = 0,
+    StartRollBackTime = 1,
+    EndRollBackTime = 2
+}
+#endregion
 
 /// <summary>
 /// class for implementing the messaging Pattern, also called EventBus
@@ -12,7 +22,7 @@ public class EventBus
     static EventBus instance;
 
     //the events we have
-    private Dictionary<string, UnityEvent> eventDictionary;
+    private Dictionary<EventMessage, UnityEvent<ParamArrayAttribute>> eventDictionary;
 
     public static EventBus Instance
     {
@@ -27,39 +37,39 @@ public class EventBus
     {
         instance = eventBus;
 
-        instance.eventDictionary = new Dictionary<string,UnityEvent>();
+        instance.eventDictionary = new Dictionary<EventMessage, UnityEvent<ParamArrayAttribute>>();
     }
 
-    public static void StartListening(string eventName, UnityAction listener)
+    public static void StartListening(EventMessage eventName, UnityAction<ParamArrayAttribute> listener)
     {
-        UnityEvent thisEvent = null;
+        UnityEvent<ParamArrayAttribute> thisEvent = null;
         if (Instance.eventDictionary.TryGetValue(eventName, out thisEvent))
         {
             thisEvent.AddListener(listener);
         }
         else
         {
-            thisEvent = new UnityEvent();
+            thisEvent = new UnityEvent<ParamArrayAttribute>();
             thisEvent.AddListener(listener);
             Instance.eventDictionary.Add(eventName, thisEvent);
         }
     }
 
-    public static void StopListening(string eventName, UnityAction listener)
+    public static void StopListening(EventMessage eventName, UnityAction<ParamArrayAttribute> listener)
     {
-        UnityEvent thisEvent = null;
+        UnityEvent<ParamArrayAttribute> thisEvent = null;
         if (Instance.eventDictionary.TryGetValue(eventName, out thisEvent))
         {
             thisEvent.RemoveListener(listener);
         }
      }
 
-    public static void TriggerEvent(string eventName)
+    public static void TriggerEvent(EventMessage eventName , ParamArrayAttribute parameters)
     {
-        UnityEvent thisEvent = null;
+        UnityEvent<ParamArrayAttribute> thisEvent = null;
         if (Instance.eventDictionary.TryGetValue(eventName, out thisEvent))
         {
-            thisEvent.Invoke();
+            thisEvent.Invoke(parameters);
         }
     }
 
