@@ -7,29 +7,31 @@ using System;
 
 public class MoveController
 {
-    GameObject character;
+    PlayerController playerController;
+    GameObject model;
     Rigidbody rigidbody;
 
     [Inject]
-    public void Constructor()
-    {
-        character = GameObject.Instantiate(Resources.Load<GameObject>("Male_01_V01"), Vector3.zero, Quaternion.Euler(0,0,0));
-        rigidbody = character.GetComponent<Rigidbody>();
+    public void Constructor(PlayerController _playerController)
+    {        
+        playerController = _playerController;
+        model = playerController.Model();
+        rigidbody = model.GetComponent<Rigidbody>();
     }
 
     public void MoveLeftOrRight( bool isLeft)
     {
-        rigidbody.MovePosition(character.transform.position + (character.transform.right * Time.fixedDeltaTime * (isLeft ? -1 : 1)));
+        rigidbody.MovePosition(model.transform.position + (model.transform.right * Time.fixedDeltaTime * (isLeft ? -1 : 1)));
     }
 
     public void MoveForwardOrBackwards(bool isBackWards)
     {
-        rigidbody.MovePosition(character.transform.position + (character.transform.forward * Time.fixedDeltaTime * (isBackWards ? -1 : 1)));
+        rigidbody.MovePosition(model.transform.position + (model.transform.forward * Time.fixedDeltaTime * (isBackWards ? -1 : 1)));
     }
 
     public void Rotate(bool isLeft)
     {
-        Quaternion currentRotation = character.transform.rotation;
+        Quaternion currentRotation = model.transform.rotation;
         Vector3 euler = currentRotation.eulerAngles + new Vector3(0, 20 * Time.fixedDeltaTime * (isLeft ? -1 : 1), 0);
         rigidbody.MoveRotation(Quaternion.Euler(euler));
     }

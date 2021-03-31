@@ -29,7 +29,7 @@ public class Game : MonoBehaviour
         inputManager = _inputManager;
         cameraController = _cameraController;
 
-        Observable.EveryUpdate().Subscribe(x => { commandInvoker.ExecuteCommands(); });
+        Observable.EveryFixedUpdate().Subscribe(x => { commandInvoker.ExecuteCommands(); });
     }
 
     public void AddCommand(ICommand command)
