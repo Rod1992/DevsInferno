@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController
 {
     GameObject model;
+    Rigidbody rigidbody;
     MoveController moveController;
 
+    public Rigidbody Rigidbody { get => rigidbody; set => rigidbody = value; }
+    public GameObject Model { get => model; set => model = value; }
+
     [Inject]
-    public void Construct()
+    public void Construct(MoveController _moveController)
     {
-        model = GameObject.Instantiate(Resources.Load<GameObject>("Male_01_V01"), Vector3.zero, Quaternion.Euler(0, 0, 0));
+        Model = GameObject.Instantiate(Resources.Load<GameObject>("Male_01_V01"), Vector3.zero, Quaternion.Euler(0, 0, 0));
+        moveController = _moveController;
+        Rigidbody = Model.GetComponent<Rigidbody>();
     }
 
-    public GameObject Model()
-    {
-        return model;
-    }
 }

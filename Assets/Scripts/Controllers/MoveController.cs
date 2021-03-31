@@ -8,32 +8,46 @@ using System;
 public class MoveController
 {
     PlayerController playerController;
-    GameObject model;
-    Rigidbody rigidbody;
+    
+    GameObject Model
+    {
+        get
+        {
+            return playerController.Model;
+        }
+    }
+
+    Rigidbody PlayerRigidbody
+    {
+        get
+        {
+            return playerController.Rigidbody;
+        }
+    }
 
     [Inject]
     public void Constructor(PlayerController _playerController)
     {        
         playerController = _playerController;
-        model = playerController.Model();
-        rigidbody = model.GetComponent<Rigidbody>();
+        
+        
     }
 
     public void MoveLeftOrRight( bool isLeft)
     {
-        rigidbody.MovePosition(model.transform.position + (model.transform.right * Time.fixedDeltaTime * (isLeft ? -1 : 1)));
+        PlayerRigidbody.MovePosition(Model.transform.position + (Model.transform.right * Time.fixedDeltaTime * (isLeft ? -1 : 1)));
     }
 
     public void MoveForwardOrBackwards(bool isBackWards)
     {
-        rigidbody.MovePosition(model.transform.position + (model.transform.forward * Time.fixedDeltaTime * (isBackWards ? -1 : 1)));
+        PlayerRigidbody.MovePosition(Model.transform.position + (Model.transform.forward * Time.fixedDeltaTime * (isBackWards ? -1 : 1)));
     }
 
     public void Rotate(bool isLeft)
     {
-        Quaternion currentRotation = model.transform.rotation;
+        Quaternion currentRotation = Model.transform.rotation;
         Vector3 euler = currentRotation.eulerAngles + new Vector3(0, 20 * Time.fixedDeltaTime * (isLeft ? -1 : 1), 0);
-        rigidbody.MoveRotation(Quaternion.Euler(euler));
+        PlayerRigidbody.MoveRotation(Quaternion.Euler(euler));
     }
 }
 
@@ -59,8 +73,6 @@ public class RotateCommand : ICommand
     public RotateCommand(bool _isLeft)
     {
         isLeft = _isLeft;
-        ts = Time.time;
-
         Game.Instance.AddCommand(this);
     }
 
@@ -82,7 +94,7 @@ public class RotateCommand : ICommand
     public void Execute()
     {
         MoveController moveController = Game.Instance.moveController;
-
+        ts = Time.time;
         moveController.Rotate(isLeft);
     }
 
@@ -117,8 +129,6 @@ public class MoveCommand : ICommand
     public MoveCommand(MoveType moveType)
     {
         direction = moveType;
-        ts = Time.time;
-
         Game.Instance.AddCommand(this);
     }
 
@@ -142,6 +152,7 @@ public class MoveCommand : ICommand
 
     public void Execute()
     {
+        ts = Time.time;
         ApplyMovement(false);
     }
 

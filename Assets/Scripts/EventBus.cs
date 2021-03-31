@@ -7,10 +7,9 @@ using Zenject;
 /// <summary>
 /// class for implementing the messaging Pattern, also called EventBus
 /// </summary>
-public class EventBus : MonoBehaviour
+public class EventBus
 {
     static EventBus instance;
-    ICommandInvoker commandInvoker;
 
     //the events we have
     private Dictionary<string, UnityEvent> eventDictionary;
@@ -24,10 +23,9 @@ public class EventBus : MonoBehaviour
     }
 
     [Inject]
-    public static void Constructor(EventBus eventBus, ICommandInvoker _commandInvoker)
+    public static void Constructor(EventBus eventBus)
     {
         instance = eventBus;
-        instance.commandInvoker = _commandInvoker;
 
         instance.eventDictionary = new Dictionary<string,UnityEvent>();
     }
@@ -64,4 +62,6 @@ public class EventBus : MonoBehaviour
             thisEvent.Invoke();
         }
     }
+
+
 }
