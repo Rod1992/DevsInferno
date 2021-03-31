@@ -7,6 +7,9 @@ using System;
 
 public class MoveController
 {
+    public const float SPEED = 0.01f;
+    public const float SPEEDROTATION = 0.2f;
+
     PlayerController playerController;
     
     GameObject Model
@@ -35,18 +38,18 @@ public class MoveController
 
     public void MoveLeftOrRight( bool isLeft)
     {
-        PlayerRigidbody.MovePosition(Model.transform.position + (Model.transform.right * Time.fixedDeltaTime * (isLeft ? -1 : 1)));
+        PlayerRigidbody.MovePosition(Model.transform.position + (Model.transform.right *  SPEED * (isLeft ? -1 : 1)));
     }
 
     public void MoveForwardOrBackwards(bool isBackWards)
     {
-        PlayerRigidbody.MovePosition(Model.transform.position + (Model.transform.forward * Time.fixedDeltaTime * (isBackWards ? -1 : 1)));
+        PlayerRigidbody.MovePosition(Model.transform.position + (Model.transform.forward * SPEED * (isBackWards ? -1 : 1)));
     }
 
     public void Rotate(bool isLeft)
     {
         Quaternion currentRotation = Model.transform.rotation;
-        Vector3 euler = currentRotation.eulerAngles + new Vector3(0, 20 * Time.fixedDeltaTime * (isLeft ? -1 : 1), 0);
+        Vector3 euler = currentRotation.eulerAngles + new Vector3(0, SPEEDROTATION * (isLeft ? -1 : 1), 0);
         PlayerRigidbody.MoveRotation(Quaternion.Euler(euler));
     }
 }

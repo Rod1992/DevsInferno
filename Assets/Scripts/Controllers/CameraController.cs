@@ -7,7 +7,7 @@ using UniRx;
 public class CameraController
 {
     //from 100 to 0
-    public const int Sensibility = 20; 
+    public const int SENSIBILITY = 20; 
 
     
 
@@ -22,12 +22,12 @@ public class CameraController
 
     public bool MouseGoingLeft()
     {
-        return Screen.width * Sensibility / 100  > Input.mousePosition.x;
+        return Screen.width * SENSIBILITY / 100  > Input.mousePosition.x;
     }
 
     public bool MouseGoingRight()
     {
-        return Screen.width * (100 - Sensibility) / 100 < Input.mousePosition.x;
+        return Screen.width * (100 - SENSIBILITY) / 100 < Input.mousePosition.x;
     }
 }
 

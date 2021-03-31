@@ -33,11 +33,11 @@ public class EventBus
     }
 
     [Inject]
-    public static void Constructor(EventBus eventBus)
+    public void Constructor(EventBus eventBus)
     {
         instance = eventBus;
 
-        instance.eventDictionary = new Dictionary<EventMessage, UnityEvent<ParamArrayAttribute>>();
+        eventDictionary = new Dictionary<EventMessage, UnityEvent<ParamArrayAttribute>>();
     }
 
     public static void StartListening(EventMessage eventName, UnityAction<ParamArrayAttribute> listener)
