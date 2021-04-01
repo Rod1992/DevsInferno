@@ -6,6 +6,7 @@ using Zenject;
 using System.Linq;
 using UniRx;
 using System.Threading.Tasks;
+using System.Threading;
 
 public class CommandInvokerGamePlay : ICommandInvoker
 {
@@ -25,7 +26,12 @@ public class CommandInvokerGamePlay : ICommandInvoker
     /// are we undoing commands
     /// </summary>
     bool isUndoing;
-    int indexCommand = 0; 
+    int indexCommand = 0;
+
+    //Threading stuff
+    Task undoTask;
+    CancellationToken cancelToken;
+    CancellationTokenSource tokenSource;
 
     [Inject]
     public void Constructor()
@@ -34,6 +40,9 @@ public class CommandInvokerGamePlay : ICommandInvoker
         commandsInvoked = new List<ICommand>();
         history = new List<ICommand>();
         isUndoing = false;
+        
+        tokenSource = new CancellationTokenSource();
+        cancelToken = tokenSource.Token;
     }
 
     public void Add(ICommand command)
@@ -68,7 +77,12 @@ public class CommandInvokerGamePlay : ICommandInvoker
         commandsToInvoke.Clear();
     }
 
-    public async void UndoUntilTimestamp(float tsToUndo, float tsStart)
+    public void UndoUntilTimestamp(float tsToUndo, float tsStart)
+    {
+        undoTask = TaskUndoUntilTimestamp(tsToUndo, tsStart);
+    }
+
+    async Task TaskUndoUntilTimestamp(float tsToUndo, float tsStart)
     {
         //NoAlloc
         ICommand command;
@@ -91,11 +105,17 @@ public class CommandInvokerGamePlay : ICommandInvoker
         {
             command = commandsInvoked[i];
             currentTs = command.GetTimeStamp();
-            
+
+            if (cancelToken.IsCancellationRequested)
+            {
+                Debug.Log("Canceled Taks");
+                cancelToken.ThrowIfCancellationRequested();
+            }
+
             if (currentTs != oldTs) {
                 
                 //we wait
-                await Task.Delay((int)((oldTs - currentTs ) * 1000));
+                await Task.Delay((int)((oldTs - currentTs ) * 1000),cancelToken);
                 oldTs = currentTs;
             }
 
@@ -143,5 +163,10 @@ public class CommandInvokerGamePlay : ICommandInvoker
     public bool IsUndoing()
     {
         return isUndoing;
+    }
+
+    public void Dispose()
+    {
+        tokenSource.Cancel();
     }
 }

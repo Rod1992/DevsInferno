@@ -86,4 +86,9 @@ public interface ICommandInvoker
     /// </summary>
     /// <returns> if are we right now undoing commands</returns>
     bool IsUndoing();
+
+    /// <summary>
+    /// get rid of the tasks and resources used
+    /// </summary>
+    void Dispose();
 }
