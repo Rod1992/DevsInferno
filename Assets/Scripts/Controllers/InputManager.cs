@@ -13,6 +13,7 @@ public class InputManager
         Observable.EveryFixedUpdate().Where(x => Input.GetKey(KeyCode.DownArrow)).Subscribe(x => new MoveCommand(MoveType.Backward));
         Observable.EveryFixedUpdate().Where(x => Input.GetKey(KeyCode.LeftArrow)).Subscribe(x => new MoveCommand(MoveType.Left));
         Observable.EveryFixedUpdate().Where(x => Input.GetKey(KeyCode.RightArrow)).Subscribe(x => new MoveCommand(MoveType.Right));
+        Observable.EveryFixedUpdate().Where(x => Input.GetKeyDown(KeyCode.Space)).Subscribe(x => new JumpCommand(1));
 
         Observable.EveryUpdate().Where(x => Input.GetKeyDown(KeyCode.R)).Subscribe(x => Game.Instance.UndoAll());
     }

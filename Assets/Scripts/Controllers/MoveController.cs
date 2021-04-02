@@ -37,6 +37,11 @@ public class MoveController
         Observable.EveryFixedUpdate().Where(x=> !playerController.HitFloor).Subscribe(x => { new GravityCommand(); });
     }
 
+    public void MoveUpwardsOrDownWard(bool isDown)
+    {
+        playerController.MoveInDir(Model.transform.up * SPEED * 20 * (isDown ? -1 : 1));
+    }
+
     public void MoveLeftOrRight( bool isLeft)
     {
         playerController.MoveInDir(Model.transform.right *  SPEED * (isLeft ? -1 : 1));
@@ -57,11 +62,6 @@ public class MoveController
     public void ApplyGravity(bool reverse = false)
     {
         playerController.MoveInDir((Physics.gravity * SPEED * (reverse ? -1 : 1)));
-    }
-
-    public void Jump()
-    {
-
     }
 }
 
@@ -287,6 +287,77 @@ public class GravityCommand : ICommand
     public void Undo()
     {
         Game.Instance.MoveControl.ApplyGravity(true);
+    }
+
+    public void Undo(float ts)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class JumpCommand : ICommand
+{
+    float secondsJump;
+    float startTs;
+    float executionTs;
+    int index;
+
+    public JumpCommand(float _secondsJump)
+    {
+        secondsJump = _secondsJump;
+        startTs = Time.time;
+        Game.Instance.AddCommand(this);
+    }
+
+    public bool CanExecute()
+    {
+        return Game.Instance.MoveControl != null;
+    }
+
+    public bool CanUndo()
+    {
+        return CanExecute();
+    }
+
+    public bool CanUndo(float ts)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Execute()
+    {
+        executionTs = Time.time;
+        Game.Instance.MoveControl.MoveUpwardsOrDownWard(false);
+
+        float newTime = secondsJump - (executionTs - startTs);
+
+        if(newTime > 0f)
+        new JumpCommand(newTime);
+    }
+
+    public int GetIndexOrder()
+    {
+        return index;
+    }
+
+    public string GetName()
+    {
+        return "Jump " + secondsJump;
+    }
+
+    public float GetTimeStamp()
+    {
+        return executionTs;
+    }
+
+    public void SetIndexOrder(int _index)
+    {
+        index = _index;
+    }
+
+    public void Undo()
+    {
+        Game.Instance.MoveControl.MoveUpwardsOrDownWard(true);
     }
 
     public void Undo(float ts)

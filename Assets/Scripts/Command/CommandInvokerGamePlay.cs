@@ -52,7 +52,11 @@ public class CommandInvokerGamePlay : ICommandInvoker
 
     public void ExecuteCommands()
     {
-        foreach (ICommand command in commandsToInvoke)
+
+        List<ICommand> commandsToTreat = new List<ICommand>( commandsToInvoke);
+        commandsToInvoke.Clear();
+
+        foreach (ICommand command in commandsToTreat)
         {
             if (command.CanExecute())
             {
@@ -73,8 +77,6 @@ public class CommandInvokerGamePlay : ICommandInvoker
                 Debug.LogError("Couldn't execute the command" + command.GetName());
             }
         }
-
-        commandsToInvoke.Clear();
     }
 
     public void UndoUntilTimestamp(float tsToUndo, float tsStart)
