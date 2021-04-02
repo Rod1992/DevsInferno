@@ -32,15 +32,16 @@ public class ParticlesManager : MonoBehaviour
     {
         foreach(ParticleInstance particle in particles)
         {
-            Destroy(particle);
+            Destroy(particle.gameObject);
         }
 
         particles.Clear();
     }
 
-    public void CreateTimeTwist(System.ParamArrayAttribute param)
+    public void CreateTimeTwist(object argum)
     {
-        ParticleInstance.CreateInstance(ParticleType.TimeTwist, this.transform);
+        Transform parent = Game.Instance.Player.Model.transform;
+        Add(ParticleInstance.CreateInstance(ParticleType.TimeTwist, Quaternion.identity, parent.position + new Vector3(0,1,0),parent));
     }
 
     public void OnDestroy()

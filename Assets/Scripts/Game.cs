@@ -9,10 +9,31 @@ public class Game : MonoBehaviour
 {
     static Game instance;
     private ICommandInvoker commandInvoker;
-    public MoveController moveController;
-    public InputManager inputManager;
-    public CameraController cameraController;
-    public ParticlesManager particlesManager;
+    public MoveController MoveControl
+    {
+        get;
+        private set;
+    }
+    public InputManager Inputs
+    {
+        get;
+        private set;
+    }
+    public CameraController Camera
+    {
+        get;
+        private set;
+    }
+    public ParticlesManager Particles
+    {
+        get;
+        private set;
+    }
+    public PlayerController Player
+    {
+        get;
+        private set;
+    }
 
 
     public static Game Instance
@@ -24,14 +45,15 @@ public class Game : MonoBehaviour
     }
 
     [Inject]
-    public void Constructor(ICommandInvoker invoker, MoveController _moveController, InputManager _inputManager, CameraController _cameraController, ParticlesManager _particlesManager)
+    public void Constructor(ICommandInvoker invoker, MoveController _moveController, InputManager _inputManager, CameraController _cameraController, ParticlesManager _particlesManager, PlayerController playerController)
     {
         instance = this;
         commandInvoker = invoker;
-        moveController = _moveController;
-        inputManager = _inputManager;
-        cameraController = _cameraController;
-        particlesManager = _particlesManager;
+        MoveControl = _moveController;
+        Inputs = _inputManager;
+        Camera = _cameraController;
+        Particles = _particlesManager;
+        Player = playerController;
 
         Observable.EveryFixedUpdate().Subscribe(x => { commandInvoker.ExecuteCommands(); });
     }

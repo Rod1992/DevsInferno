@@ -8,8 +8,8 @@ public class ParticleInstance : MonoBehaviour
     [SerializeField]
     ParticleType type;
 
-    public static void CreateInstance(ParticleType type, Transform parent)
+    public static ParticleInstance CreateInstance(ParticleType type, Quaternion rotation, Vector3 pos, Transform parent = null)
     {
-        GameObject.Instantiate<ParticleInstance>(Resources.Load<ParticleInstance>("Prefabs/Particles/" + type.ToString()), parent);
+        return GameObject.Instantiate<ParticleInstance>(Resources.Load<ParticleInstance>("Prefabs/Particles/" + type.ToString()), pos, rotation ,parent);
     }
 }

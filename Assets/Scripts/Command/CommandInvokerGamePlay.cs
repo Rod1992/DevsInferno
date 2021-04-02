@@ -113,9 +113,9 @@ public class CommandInvokerGamePlay : ICommandInvoker
             }
 
             if (currentTs != oldTs) {
-                
+                int msToWait = (int)((oldTs - currentTs) * 1000);
                 //we wait
-                await Task.Delay((int)((oldTs - currentTs ) * 1000),cancelToken);
+                await Task.Delay(msToWait,cancelToken);
                 oldTs = currentTs;
             }
 

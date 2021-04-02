@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 using UniRx;
+using UniRx.Triggers;
 using System;
 
 public class MoveController
@@ -32,18 +33,18 @@ public class MoveController
     public void Constructor(PlayerController _playerController)
     {        
         playerController = _playerController;
-        
-        
+
+        Observable.EveryFixedUpdate().Where(x=> !playerController.HitFloor).Subscribe(x => { new GravityCommand(); });
     }
 
     public void MoveLeftOrRight( bool isLeft)
     {
-        PlayerRigidbody.MovePosition(Model.transform.position + (Model.transform.right *  SPEED * (isLeft ? -1 : 1)));
+        playerController.MoveInDir(Model.transform.right *  SPEED * (isLeft ? -1 : 1));
     }
 
     public void MoveForwardOrBackwards(bool isBackWards)
     {
-        PlayerRigidbody.MovePosition(Model.transform.position + (Model.transform.forward * SPEED * (isBackWards ? -1 : 1)));
+        playerController.MoveInDir((Model.transform.forward * SPEED * (isBackWards ? -1 : 1)));
     }
 
     public void Rotate(bool isLeft)
@@ -51,6 +52,16 @@ public class MoveController
         Quaternion currentRotation = Model.transform.rotation;
         Vector3 euler = currentRotation.eulerAngles + new Vector3(0, SPEEDROTATION * (isLeft ? -1 : 1), 0);
         PlayerRigidbody.MoveRotation(Quaternion.Euler(euler));
+    }
+
+    public void ApplyGravity(bool reverse = false)
+    {
+        playerController.MoveInDir((Physics.gravity * SPEED * (reverse ? -1 : 1)));
+    }
+
+    public void Jump()
+    {
+
     }
 }
 
@@ -82,7 +93,7 @@ public class RotateCommand : ICommand
 
     public bool CanExecute()
     {
-        return Game.Instance.moveController != null;
+        return Game.Instance.MoveControl != null;
     }
 
     public bool CanUndo()
@@ -97,7 +108,7 @@ public class RotateCommand : ICommand
 
     public void Execute()
     {
-        MoveController moveController = Game.Instance.moveController;
+        MoveController moveController = Game.Instance.MoveControl;
         ts = Time.time;
         moveController.Rotate(isLeft);
     }
@@ -124,7 +135,7 @@ public class RotateCommand : ICommand
 
     public void Undo()
     {
-        MoveController moveController = Game.Instance.moveController;
+        MoveController moveController = Game.Instance.MoveControl;
 
         moveController.Rotate(!isLeft);
     }
@@ -149,7 +160,7 @@ public class MoveCommand : ICommand
 
     public bool CanExecute()
     {
-        return Game.Instance.moveController != null &&
+        return Game.Instance.MoveControl != null &&
             direction != MoveType.None &&
             !(direction.HasFlag(MoveType.Forward) && direction.HasFlag(MoveType.Backward)) &&
             !(direction.HasFlag(MoveType.Left) && direction.HasFlag(MoveType.Right));
@@ -197,7 +208,7 @@ public class MoveCommand : ICommand
     /// <param name="isInverted">means if we are reversing the movement</param>
     public void ApplyMovement(bool isInverted)
     {
-        MoveController moveController = Game.Instance.moveController;
+        MoveController moveController = Game.Instance.MoveControl;
         if (direction.HasFlag(MoveType.Forward))
             moveController.MoveForwardOrBackwards(isInverted);
 
@@ -219,6 +230,68 @@ public class MoveCommand : ICommand
     public void SetIndexOrder(int _index)
     {
         index = _index;
+    }
+}
+
+public class GravityCommand : ICommand
+{
+    float ts;
+    int indexOrder;
+
+    public GravityCommand()
+    {
+        Game.Instance.AddCommand(this);
+    }
+
+    public bool CanExecute()
+    {
+        return Game.Instance.MoveControl != null;
+    }
+
+    public bool CanUndo()
+    {
+        return Game.Instance.MoveControl != null;
+    }
+
+    public bool CanUndo(float ts)
+    {
+        return Game.Instance.MoveControl != null;
+    }
+
+    public void Execute()
+    {
+        ts = Time.time;
+        Game.Instance.MoveControl.ApplyGravity();
+    }
+
+    public int GetIndexOrder()
+    {
+        return indexOrder;
+    }
+
+    public string GetName()
+    {
+        return "GravityCycle";
+    }
+
+    public float GetTimeStamp()
+    {
+        return ts;
+    }
+
+    public void SetIndexOrder(int index)
+    {
+        indexOrder = index;
+    }
+
+    public void Undo()
+    {
+        Game.Instance.MoveControl.ApplyGravity(true);
+    }
+
+    public void Undo(float ts)
+    {
+        throw new NotImplementedException();
     }
 }
 #endregion

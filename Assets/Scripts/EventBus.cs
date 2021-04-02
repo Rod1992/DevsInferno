@@ -22,7 +22,7 @@ public class EventBus
     static EventBus instance;
 
     //the events we have
-    private Dictionary<EventMessage, UnityEvent<ParamArrayAttribute>> eventDictionary;
+    private Dictionary<EventMessage, UnityEvent<object>> eventDictionary;
 
     public static EventBus Instance
     {
@@ -37,36 +37,36 @@ public class EventBus
     {
         instance = eventBus;
 
-        eventDictionary = new Dictionary<EventMessage, UnityEvent<ParamArrayAttribute>>();
+        eventDictionary = new Dictionary<EventMessage, UnityEvent<object>>();
     }
 
-    public static void StartListening(EventMessage eventName, UnityAction<ParamArrayAttribute> listener)
+    public static void StartListening(EventMessage eventName, UnityAction<object> listener)
     {
-        UnityEvent<ParamArrayAttribute> thisEvent = null;
+        UnityEvent<object> thisEvent = null;
         if (Instance.eventDictionary.TryGetValue(eventName, out thisEvent))
         {
             thisEvent.AddListener(listener);
         }
         else
         {
-            thisEvent = new UnityEvent<ParamArrayAttribute>();
+            thisEvent = new UnityEvent<object>();
             thisEvent.AddListener(listener);
             Instance.eventDictionary.Add(eventName, thisEvent);
         }
     }
 
-    public static void StopListening(EventMessage eventName, UnityAction<ParamArrayAttribute> listener)
+    public static void StopListening(EventMessage eventName, UnityAction<object> listener)
     {
-        UnityEvent<ParamArrayAttribute> thisEvent = null;
+        UnityEvent<object> thisEvent = null;
         if (Instance.eventDictionary.TryGetValue(eventName, out thisEvent))
         {
             thisEvent.RemoveListener(listener);
         }
      }
 
-    public static void TriggerEvent(EventMessage eventName , ParamArrayAttribute parameters)
+    public static void TriggerEvent(EventMessage eventName , object parameters)
     {
-        UnityEvent<ParamArrayAttribute> thisEvent = null;
+        UnityEvent<object> thisEvent = null;
         if (Instance.eventDictionary.TryGetValue(eventName, out thisEvent))
         {
             thisEvent.Invoke(parameters);

@@ -3,21 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class PlayerController
+public class PlayerController : MonoBehaviour
 {
     GameObject model;
-    Rigidbody rigidbody;
+    Rigidbody myRigidbody;
     MoveController moveController;
 
-    public Rigidbody Rigidbody { get => rigidbody; set => rigidbody = value; }
-    public GameObject Model { get => model; set => model = value; }
+    public Rigidbody Rigidbody { get => myRigidbody; private set => myRigidbody = value; }
+    public GameObject Model { get => model; private set => model = value; }
+    PhysicsObject Physics { get; set; }
+
+    public bool HitFloor
+    {
+        get
+        {
+            return Physics.HitFloor;
+        }
+    }
 
     [Inject]
     public void Construct(MoveController _moveController)
     {
-        Model = GameObject.Instantiate(Resources.Load<GameObject>("Male_01_V01"), Vector3.zero, Quaternion.Euler(0, 0, 0));
+        Model = this.gameObject;
         moveController = _moveController;
         Rigidbody = Model.GetComponent<Rigidbody>();
+        Physics = this.GetComponent<PhysicsObject>();
     }
 
+    public void MoveInDir(Vector3 dir)
+    {
+        Physics.AddDirToQueue(dir);
+    }
 }
