@@ -40,15 +40,11 @@ public interface ICommand
     /// </summary>
     void Undo();
 
-    void Undo(float ts);
-
     /// <summary>
     /// Can we undo the command?, first it should have been executed
     /// </summary>
     /// <returns></returns>
     bool CanUndo();
-
-    bool CanUndo(float ts);
 }
 
 public interface ICommandInvoker

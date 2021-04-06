@@ -132,18 +132,6 @@ public class CommandInvokerGamePlay : ICommandInvoker
                     Debug.LogError("There was a problem with the command " + command.GetName() + " The error was " + e.Message);
                 }
              }
-            else if(currentTs < tsToUndo && command.CanUndo(tsToUndo))
-            {
-                //it's a command that started before our ts but that has executed during 
-                try
-                {
-                    command.Undo(tsToUndo);
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError("There was a problem with the command " + command.GetName() + " The error was " + e.Message);
-                }
-            }
             else
             {
                 Debug.LogError("Couldn't undo the command" + command.GetName());
@@ -159,7 +147,7 @@ public class CommandInvokerGamePlay : ICommandInvoker
     public string ExportLogReportCommands()
     {
         //we aggreagate the names of all the commands
-        return history.Select<ICommand, string>((command, s) => { return command.GetName(); }).Aggregate((x, y) => { return x + y; });
+        return history.Select<ICommand, string>((command, s) => { return command.GetName(); }).Aggregate((x, y) => { return x +"\n"+ y; });
     }
 
     public bool IsUndoing()

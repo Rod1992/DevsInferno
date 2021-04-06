@@ -101,11 +101,6 @@ public class RotateCommand : ICommand
         return CanExecute();
     }
 
-    public bool CanUndo(float ts)
-    {
-        throw new NotImplementedException();
-    }
-
     public void Execute()
     {
         MoveController moveController = Game.Instance.MoveControl;
@@ -120,7 +115,7 @@ public class RotateCommand : ICommand
 
     public string GetName()
     {
-        return "Rotate " + (isLeft ? "Left" : "Right");
+        return this.GetType().Name + "$" + (isLeft ? "Left" : "Right");
     }
 
     public float GetTimeStamp()
@@ -138,11 +133,6 @@ public class RotateCommand : ICommand
         MoveController moveController = Game.Instance.MoveControl;
 
         moveController.Rotate(!isLeft);
-    }
-
-    public void Undo(float ts)
-    {
-        throw new NotImplementedException();
     }
 }
 
@@ -171,11 +161,6 @@ public class MoveCommand : ICommand
         return CanExecute();
     }
 
-    public bool CanUndo(float ts)
-    {
-        throw new System.NotImplementedException();
-    }
-
     public void Execute()
     {
         ts = Time.time;
@@ -184,7 +169,7 @@ public class MoveCommand : ICommand
 
     public string GetName()
     {
-        return "Move" + direction.ToString();
+        return this.GetType().Name + "$" + direction.ToString();
     }
 
     public float GetTimeStamp()
@@ -195,11 +180,6 @@ public class MoveCommand : ICommand
     public void Undo()
     {
         ApplyMovement(true);
-    }
-
-    public void Undo(float ts)
-    {
-        throw new System.NotImplementedException();
     }
 
     /// <summary>
@@ -253,11 +233,6 @@ public class GravityCommand : ICommand
         return Game.Instance.MoveControl != null;
     }
 
-    public bool CanUndo(float ts)
-    {
-        return Game.Instance.MoveControl != null;
-    }
-
     public void Execute()
     {
         ts = Time.time;
@@ -271,7 +246,7 @@ public class GravityCommand : ICommand
 
     public string GetName()
     {
-        return "GravityCycle";
+        return this.GetType().Name;
     }
 
     public float GetTimeStamp()
@@ -287,11 +262,6 @@ public class GravityCommand : ICommand
     public void Undo()
     {
         Game.Instance.MoveControl.ApplyGravity(true);
-    }
-
-    public void Undo(float ts)
-    {
-        throw new NotImplementedException();
     }
 }
 
@@ -319,11 +289,6 @@ public class JumpCommand : ICommand
         return CanExecute();
     }
 
-    public bool CanUndo(float ts)
-    {
-        throw new NotImplementedException();
-    }
-
     public void Execute()
     {
         executionTs = Time.time;
@@ -342,7 +307,7 @@ public class JumpCommand : ICommand
 
     public string GetName()
     {
-        return "Jump " + secondsJump;
+        return this.GetType().Name + "$" + secondsJump;
     }
 
     public float GetTimeStamp()
@@ -358,11 +323,6 @@ public class JumpCommand : ICommand
     public void Undo()
     {
         Game.Instance.MoveControl.MoveUpwardsOrDownWard(true);
-    }
-
-    public void Undo(float ts)
-    {
-        throw new NotImplementedException();
     }
 }
 #endregion
