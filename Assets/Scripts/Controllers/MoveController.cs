@@ -91,6 +91,12 @@ public class RotateCommand : ICommand
         Game.Instance.AddCommand(this);
     }
 
+    public RotateCommand(float _ts, params string[] _isLeft)
+    {
+        ts = _ts;
+        isLeft = bool.Parse(_isLeft.GetValue(0).ToString());
+    }
+
     public bool CanExecute()
     {
         return Game.Instance.MoveControl != null;
@@ -115,7 +121,9 @@ public class RotateCommand : ICommand
 
     public string GetName()
     {
-        return this.GetType().Name + "$" + (isLeft ? "Left" : "Right");
+        return this.GetType().Name +
+            "$" + ts.ToString() +
+            "$" + isLeft.ToString();
     }
 
     public float GetTimeStamp()
@@ -148,6 +156,12 @@ public class MoveCommand : ICommand
         Game.Instance.AddCommand(this);
     }
 
+    public MoveCommand(float _ts, params string[] moveType)
+    {
+        ts = _ts;
+        direction = (MoveType) Enum.Parse( typeof(MoveType), moveType.GetValue(0).ToString());
+    }
+
     public bool CanExecute()
     {
         return Game.Instance.MoveControl != null &&
@@ -169,7 +183,9 @@ public class MoveCommand : ICommand
 
     public string GetName()
     {
-        return this.GetType().Name + "$" + direction.ToString();
+        return this.GetType().Name +
+            "$" + ts.ToString() +
+            "$" + direction.ToString();
     }
 
     public float GetTimeStamp()
@@ -223,6 +239,11 @@ public class GravityCommand : ICommand
         Game.Instance.AddCommand(this);
     }
 
+    public GravityCommand(float _ts)
+    {
+        ts = _ts;
+    }
+
     public bool CanExecute()
     {
         return Game.Instance.MoveControl != null;
@@ -246,7 +267,8 @@ public class GravityCommand : ICommand
 
     public string GetName()
     {
-        return this.GetType().Name;
+        return this.GetType().Name +
+            "$" + ts.ToString();
     }
 
     public float GetTimeStamp()
@@ -279,6 +301,12 @@ public class JumpCommand : ICommand
         Game.Instance.AddCommand(this);
     }
 
+    public JumpCommand(float _ts, params string[] _secondsJump)
+    {
+        secondsJump = float.Parse(_secondsJump.GetValue(0).ToString());
+        executionTs = _ts;
+    }
+
     public bool CanExecute()
     {
         return Game.Instance.MoveControl != null;
@@ -307,7 +335,9 @@ public class JumpCommand : ICommand
 
     public string GetName()
     {
-        return this.GetType().Name + "$" + secondsJump;
+        return this.GetType().Name +
+            "$" + executionTs.ToString() +
+            "$" + secondsJump.ToString();
     }
 
     public float GetTimeStamp()

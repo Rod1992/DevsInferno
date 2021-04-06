@@ -19,6 +19,7 @@ public class GameInstaller : MonoInstaller
         Container.Bind<MoveController>().AsSingle().NonLazy();
         Container.Bind<InputManager>().AsSingle().NonLazy();
         Container.Bind<ParticlesManager>().FromComponentsInNewPrefab(prefabParticlesManager).AsSingle().NonLazy();
+        Container.Bind<LogsManager>().AsSingle().NonLazy();
     }
 
     
