@@ -12,7 +12,13 @@ public class GameInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
+
+#if !DEBUGMODE
         Container.Bind<ICommandInvoker>().To<CommandInvokerGamePlay>().AsSingle().NonLazy();
+#else
+        Container.Bind<ICommandInvoker>().To<CommandInvokeDebugging>().AsSingle().NonLazy();
+#endif
+
         Container.Bind<EventBus>().AsSingle().NonLazy();
         Container.Bind<PlayerController>().FromComponentInNewPrefab(prefabPlayerController).AsSingle().NonLazy();
         Container.Bind<CameraController>().AsSingle().NonLazy();

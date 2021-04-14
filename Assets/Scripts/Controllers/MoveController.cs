@@ -110,7 +110,9 @@ public class RotateCommand : ICommand
     public void Execute()
     {
         MoveController moveController = Game.Instance.MoveControl;
+#if !DEBUGMODE
         ts = Time.time;
+#endif
         moveController.Rotate(isLeft);
     }
 
@@ -177,7 +179,9 @@ public class MoveCommand : ICommand
 
     public void Execute()
     {
+#if !DEBUGMODE
         ts = Time.time;
+#endif
         ApplyMovement(false);
     }
 
@@ -256,7 +260,9 @@ public class GravityCommand : ICommand
 
     public void Execute()
     {
+#if !DEBUGMODE
         ts = Time.time;
+#endif
         Game.Instance.MoveControl.ApplyGravity();
     }
 
@@ -319,13 +325,17 @@ public class JumpCommand : ICommand
 
     public void Execute()
     {
+#if !DEBUGMODE
         executionTs = Time.time;
-        Game.Instance.MoveControl.MoveUpwardsOrDownWard(false);
+#endif
 
+        Game.Instance.MoveControl.MoveUpwardsOrDownWard(false);
+#if !DEBUGMODE
         float newTime = secondsJump - (executionTs - startTs);
 
         if(newTime > 0f)
         new JumpCommand(newTime);
+#endif
     }
 
     public int GetIndexOrder()

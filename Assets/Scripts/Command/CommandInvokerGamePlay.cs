@@ -28,7 +28,7 @@ public class CommandInvokerGamePlay : ICommandInvoker
     bool isUndoing;
     int indexCommand = 0;
 
-    //Threading stuff
+    //Threading stuff to cancel our tasks
     Task undoTask;
     CancellationToken cancelToken;
     CancellationTokenSource tokenSource;

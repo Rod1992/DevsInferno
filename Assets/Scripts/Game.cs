@@ -61,8 +61,9 @@ public class Game : MonoBehaviour
         Player = playerController;
         LogsManager = logsManager;
 
+#if !DEBUGMODE
         Observable.EveryFixedUpdate().Subscribe(x => { commandInvoker.ExecuteCommands(); }).AddTo(this);
-        Observable.IntervalFrame(60).Where(x => (commandInvoker as CommandInvokerGamePlay) != null).Subscribe(x => { LogsManager.SaveLogs(commandInvoker.ExportLogReportCommands()); }).AddTo(this);
+#endif
     }
 
     public void AddCommand(ICommand command)
@@ -79,5 +80,10 @@ public class Game : MonoBehaviour
     public void OnDestroy()
     {
         commandInvoker.Dispose();
+    }
+
+    public void SaveLogs()
+    {
+        LogsManager.SaveLogs(commandInvoker.ExportLogReportCommands());
     }
 }
