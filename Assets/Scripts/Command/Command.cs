@@ -49,10 +49,6 @@ public interface ICommand
 
 public interface ICommandInvoker
 {
-    /// <summary>
-    /// Initiaize the Invoker
-    /// </summary>
-    void Constructor();
 
     /// <summary>
     /// Execute all the commands

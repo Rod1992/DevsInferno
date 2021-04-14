@@ -9,6 +9,11 @@ public class Game : MonoBehaviour
 {
     static Game instance;
     private ICommandInvoker commandInvoker;
+    public LogsManager LogsManager
+    {
+        get;
+        private set;
+    }
     public MoveController MoveControl
     {
         get;
@@ -45,7 +50,7 @@ public class Game : MonoBehaviour
     }
 
     [Inject]
-    public void Constructor(ICommandInvoker invoker, MoveController _moveController, InputManager _inputManager, CameraController _cameraController, ParticlesManager _particlesManager, PlayerController playerController)
+    public void Constructor(ICommandInvoker invoker, MoveController _moveController, InputManager _inputManager, CameraController _cameraController, ParticlesManager _particlesManager, PlayerController playerController, LogsManager logsManager)
     {
         instance = this;
         commandInvoker = invoker;
@@ -54,8 +59,11 @@ public class Game : MonoBehaviour
         Camera = _cameraController;
         Particles = _particlesManager;
         Player = playerController;
+        LogsManager = logsManager;
 
-        Observable.EveryFixedUpdate().Subscribe(x => { commandInvoker.ExecuteCommands(); });
+#if !DEBUGMODE
+        Observable.EveryFixedUpdate().Subscribe(x => { commandInvoker.ExecuteCommands(); }).AddTo(this);
+#endif
     }
 
     public void AddCommand(ICommand command)
@@ -72,5 +80,10 @@ public class Game : MonoBehaviour
     public void OnDestroy()
     {
         commandInvoker.Dispose();
+    }
+
+    public void SaveLogs()
+    {
+        LogsManager.SaveLogs(commandInvoker.ExportLogReportCommands());
     }
 }
