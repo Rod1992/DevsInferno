@@ -13,6 +13,7 @@ public enum EventMessage
     EndRollBackTime = 2,
     Pause = 3,
     Unpause = 4,
+    Death = 5,
 }
 #endregion
 
