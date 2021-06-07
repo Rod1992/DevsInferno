@@ -10,7 +10,9 @@ public enum EventMessage
 {
     None = 0,
     StartRollBackTime = 1,
-    EndRollBackTime = 2
+    EndRollBackTime = 2,
+    Pause = 3,
+    Unpause = 4,
 }
 #endregion
 

@@ -7,6 +7,17 @@ using System.Threading.Tasks;
 
 public class Game : MonoBehaviour
 {
+
+    private bool isSystemOnPause = false;
+
+    public bool IsSystemOnPause
+    {
+        get
+        {
+            return isSystemOnPause;
+        }
+    }
+
     static Game instance;
     private ICommandInvoker commandInvoker;
     public LogsManager LogsManager
@@ -62,13 +73,19 @@ public class Game : MonoBehaviour
         LogsManager = logsManager;
 
 #if !DEBUGMODE
-        Observable.EveryFixedUpdate().Subscribe(x => { commandInvoker.ExecuteCommands(); }).AddTo(this);
+        Observable.EveryFixedUpdate().Where(x => !IsSystemOnPause).Subscribe(x => { commandInvoker.ExecuteCommands(); }).AddTo(this);
 #endif
+    }
+
+    private void Start()
+    {
+        EventBus.StartListening(EventMessage.Pause, PauseGame);
+        EventBus.StartListening(EventMessage.Unpause, UnPauseGame);
     }
 
     public void AddCommand(ICommand command)
     {
-        if(!commandInvoker.IsUndoing())
+        if(!commandInvoker.IsUndoing() && !IsSystemOnPause)
         commandInvoker.Add(command);
     }
 
@@ -80,10 +97,22 @@ public class Game : MonoBehaviour
     public void OnDestroy()
     {
         commandInvoker.Dispose();
+        EventBus.StopListening(EventMessage.Pause, PauseGame);
+        EventBus.StopListening(EventMessage.Unpause, UnPauseGame);
     }
 
     public void SaveLogs()
     {
         LogsManager.SaveLogs(commandInvoker.ExportLogReportCommands());
+    }
+
+    private void PauseGame(object obj)
+    {
+        isSystemOnPause = true;
+    }
+
+    private void UnPauseGame(object obj)
+    {
+        isSystemOnPause = false;
     }
 }
