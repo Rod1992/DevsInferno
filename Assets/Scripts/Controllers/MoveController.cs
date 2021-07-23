@@ -8,60 +8,40 @@ using System;
 
 public class MoveController
 {
-    public const float SPEED = 0.01f;
-    public const float SPEEDROTATION = 0.2f;
 
-    PlayerController playerController;
-    
-    GameObject Model
-    {
-        get
-        {
-            return playerController.Model;
-        }
-    }
-
-    Rigidbody PlayerRigidbody
-    {
-        get
-        {
-            return playerController.Rigidbody;
-        }
-    }
+    MovingObject movingObject;
 
     [Inject]
-    public void Constructor(PlayerController _playerController)
+    public void Constructor(PlayerController playerController)
     {        
-        playerController = _playerController;
+        movingObject = playerController.MovingObject;
 
-        Observable.EveryFixedUpdate().Where(x=> !playerController.HitFloor).Subscribe(x => { new GravityCommand(); });
+        Observable.EveryFixedUpdate().Where(x=> !movingObject.HitFloor).Subscribe(x => { new GravityCommand(); });
     }
 
     public void MoveUpwardsOrDownWard(bool isDown)
     {
-        playerController.MoveInDir(Model.transform.up * SPEED * 20 * (isDown ? -1 : 1));
+        this.movingObject.MoveUpwardsOrDownWard(isDown);
     }
 
-    public void MoveLeftOrRight( bool isLeft)
+    public void MoveLeftOrRight(bool isLeft)
     {
-        playerController.MoveInDir(Model.transform.right *  SPEED * (isLeft ? -1 : 1));
+        this.movingObject.MoveLeftOrRight(isLeft);
     }
 
     public void MoveForwardOrBackwards(bool isBackWards)
     {
-        playerController.MoveInDir((Model.transform.forward * SPEED * (isBackWards ? -1 : 1)));
+        this.movingObject.MoveForwardOrBackwards(isBackWards);
     }
 
     public void Rotate(bool isLeft)
     {
-        Quaternion currentRotation = Model.transform.rotation;
-        Vector3 euler = currentRotation.eulerAngles + new Vector3(0, SPEEDROTATION * (isLeft ? -1 : 1), 0);
-        PlayerRigidbody.MoveRotation(Quaternion.Euler(euler));
+        this.movingObject.Rotate(isLeft);
     }
 
     public void ApplyGravity(bool reverse = false)
     {
-        playerController.MoveInDir((Physics.gravity * SPEED * (reverse ? -1 : 1)));
+        this.movingObject.ApplyGravity(reverse);
     }
 }
 

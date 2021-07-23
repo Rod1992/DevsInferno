@@ -5,33 +5,16 @@ using Zenject;
 
 public class PlayerController : MonoBehaviour
 {
-    GameObject model;
-    Rigidbody myRigidbody;
-    MoveController moveController;
+    
+    MovingObject movingObject;
 
-    public Rigidbody Rigidbody { get => myRigidbody; private set => myRigidbody = value; }
-    public GameObject Model { get => model; private set => model = value; }
-    PhysicsObject Physics { get; set; }
-
-    public bool HitFloor
-    {
-        get
-        {
-            return Physics.HitFloor;
-        }
-    }
+    public MovingObject MovingObject { get => movingObject;}
 
     [Inject]
-    public void Construct(MoveController _moveController)
+    public void Construct()
     {
-        Model = this.gameObject;
-        moveController = _moveController;
-        Rigidbody = Model.GetComponent<Rigidbody>();
-        Physics = this.GetComponent<PhysicsObject>();
+
     }
 
-    public void MoveInDir(Vector3 dir)
-    {
-        Physics.AddDirToQueue(dir);
-    }
+    
 }
